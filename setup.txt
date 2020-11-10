@@ -16,7 +16,7 @@
 3. Install angualr Cli :
     sudo apt-get install npm
     npm -v
-    terraform --version 
+    npm install -g angular/cli@8.1.0
     ng --version
     ng new my-app
 
