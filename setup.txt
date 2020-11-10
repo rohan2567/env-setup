@@ -1,0 +1,41 @@
+1. Docker on Ubuntu :
+    sudo apt-get update
+    sudo apt-get install docker.io
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    sudo chmod 666 /var/run/docker.sock
+    docker --version
+
+2. Terraform :
+    sudo apt-get install unzip
+    wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip
+    unzip terraform_0.12.18_linux_amd64.zip
+    sudo mv terraform /usr/local/bin/
+    terraform --version 
+
+3. Install angualr Cli :
+    sudo apt-get install npm
+    npm -v
+    terraform --version 
+    ng --version
+    ng new my-app
+
+4. Git on linux :
+    apt-get install -y git
+
+5. Jenkins with Docker image:
+    docker run --name My_Jenkins -v /var/jenkins_home -p 8080:8080 -p 50000:50000
+
+6. Chef-server :
+
+5. Chef-Workstation :
+
+6. Bootstrap a Linux node in chef:
+
+7. Bootstrap a Windows node in chef :
+
+
+
+
+
+
