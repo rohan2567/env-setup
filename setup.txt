@@ -126,6 +126,31 @@
             Run command to make all nodes in a ready state :
 	            kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
 
-10. Setup ELK stack :
+10. Setting up a Jenkins Slave using Ubuntu Vm :
+        Create a ubuntu vm and only allow port 22 on it.
+        On Jenkins Slave machine :
+            sudo apt-get update
+            sudo apt-get install default-jdk -y
+            sudo apt-get install maven -y
+            sudo useradd jenkins -m jenkins
+            sudo -u jenkins mkdir /home/jenkins/.ssh
+        On Master Node :
+            cat ~/.ssh/id_rsa.pub
+            Copy the output
+        On Slave Machine :
+            sudo -u jenkins nano /home/jenkins/.ssh/authorized_keys
+            Paste the output, save and close the file
+        On Master Node :
+            Verify if you can login to slave from master
+            ssh jenkins@<ip-of-slave-node>
+        Open Jenkins
+            Manage Jenkins -> Nodes -> Add node
+            Give a name
+            Choose permananet agent
+            Choose no of executors as 1
+            enter /home/jenkins as home directory
+            Launch method - Launch slave nodes via ssh
+            Create a ssh credential by copying from master node -> sudo cat ~/.ssh/id_rsa
+            Save the configration.
 
-11. 
+11. Setup ELK stack :
