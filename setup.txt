@@ -23,18 +23,14 @@
 4. Git on linux :
     apt-get install -y git
 
-5. Jenkins with Docker image:
+5. Docker Images :-->
+    a. Jenkins 
     docker run --name Jenkins -v jenkins:/home/hp/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
 
-6. Chef-server :
+    b. Sonarqube
+    docker run -d --name sonar -p 9000:9000 sonarqube
 
-5. Chef-Workstation :
-
-6. Bootstrap a Linux node in chef:
-
-7. Bootstrap a Windows node in chef :
-
-8. Install azure Cli on Ubuntu :
+6. Install azure Cli on Ubuntu :
     sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
     
     curl -sL https://packages.microsoft.com/keys/microsoft.asc |
@@ -49,10 +45,87 @@
     sudo apt-get install azure-cli
     az --version
 
-9. Azure Cli login :
+    Azure Cli login :
     az login -u <username> -p <password>
 
-10. 
+7. Install Docker inside a Jenkins container :
+    Create a vm
+    run jenkins container
+    docker exec -u root -it bash <container-jenkins-name>
+    run the following script :
+        apt-get update && \
+        apt-get -y install apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg2 \
+        software-properties-common && \
+        curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
+        add-apt-repository \
+        "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+        $(lsb_release -cs) \
+        stable" && \
+        apt-get update && \
+        apt-get -y install docker-ce
 
+    Now, verify installation by "docker version"
 
+8.  Connecting Jenkins and sonarqube :
+        start jenkins & sonarqube containers
+        
+9. Install a Kubernetes Cluster  :
+            Initial setup :
+	            ubuntu VM's on AWS
+	            k8s master - t2.medium
+	            node - t2.micro
+	            Expose port 6443 on all the nodes
 
+            Setting hostname on all nodes :
+	            sudo hostnamectl set-hostname "k8s-master" 	//run on master
+	            sudo hostnamectl set-hostname "k8s-node1"	//run on node 1
+	
+            Update entries in /etc/hosts on all nodes :
+	            <ip of master>   k8s-master
+	            <ip of node>     k8s-node1
+	
+            Install Docker on all nodes :
+	            sudo apt update
+	            sudo apt install -y docker.io
+	            sudo groupadd docker
+	            sudo usermod -aG docker $USER
+	            sudo chmod 666 /var/run/docker.sock
+	
+            Disable swap and enable IP forwarding on all nodes :
+	            sudo swapoff -a
+	
+            Enable the ip forwarding permanently :
+	            in file “/etc/sysctl.conf”
+	            look for line “net.ipv4.ip_forward=1” and un-comment it.
+	            sudo sysctl -p
+	
+            Install Kubectl, kubelet and kubeadm on all nodes :
+	            sudo apt install -y apt-transport-https curl
+	            curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+	            sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+	            sudo apt update
+	            sudo apt install -y kubelet kubeadm kubectl
+	 
+            Initialize Kubernetes Cluster using kubeadm from master node :
+	            sudo systemctl enable docker.service
+	            sudo kubeadm init
+	            Copy the token generated on screen
+	            Execute the commands :
+		            mkdir -p $HOME/.kube
+		            sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+		            sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+            Join worker node by the token genefrated from kubeadm init.
+	        On Node1 node:
+	        kubeadm join 172.31.47.133:6443 --token oaccml.i60olbwjwi6x7ys2 --discovery-token-ca-cert-hash 
+	        sha256:1ac033f7622827dc562c140f6221aadfcaf7c21573bf445b177f93cd055d3a1a
+
+            Run command to make all nodes in a ready state :
+	            kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+
+10. Setup ELK stack :
+
+11. 
