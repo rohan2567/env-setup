@@ -9,7 +9,7 @@
 2. Terraform :
     sudo apt-get install unzip
     wget https://releases.hashicorp.com/terraform/0.14.3/terraform_0.14.3_linux_amd64.zip
-    unzip terraform_0.12.18_linux_amd64.zip
+    unzip terraform_0.14.3_linux_amd64.zip
     sudo mv terraform /usr/local/bin/
     terraform --version 
     
@@ -156,4 +156,89 @@
             Create a ssh credential by copying from master node -> sudo cat ~/.ssh/id_rsa
             Save the configration.
 
-11. Setup ELK stack :
+11. Minikube Setup Ubuntu 20.04 :
+	sudo apt-get update
+	sudo apt-get install curl
+	sudo apt-get install apt-transport-https
+	sudo apt install virtualbox virtualbox-ext-pack
+	Press "Tab" -> OK -> Yes
+	
+	curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.18.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+	curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.6.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl 		/usr/local/bin/
+
+	sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm -o /usr/local/bin/docker-machine-driver-kvm
+
+	sudo chmod +x /usr/local/bin/docker-machine-driver-kvm
+	sudo apt install qemu qemu-kvm
+
+	curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.18.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+ 	
+	export MINIKUBE_WANTUPDATENOTIFICATION=false
+ 	export MINIKUBE_WANTREPORTERRORPROMPT=false
+ 	export MINIKUBE_HOME=$HOME
+ 	export CHANGE_MINIKUBE_NONE_USER=true
+ 	export KUBECONFIG=$HOME/.kube/config
+   	sudo minikube start --vm-driver none
+   	sudo chown -R $USER $HOME/.kube
+ 	sed 's/root/home\/rohan/g' $KUBECONFIG > tmp; mv tmp $KUBECONFIG
+   
+   	TROUBLESHOOTING :
+	minikube stop
+	minikube delete
+	rm -rf ~/.kube
+	rm -rf ~/.minikube
+	sudo rm -rf /var/lib/minikube
+	sudo rm /var/lib/kubeadm.yaml
+	sudo rm -rf /etc/kubernetes
+
+	Now, start from step to install minikube package again.
+
+12 . Chef-Server Installation :
+
+13. Chef- Workstation Installation :
+
+14. Bootstraping Windows and Linux Servers from Chef-workstation :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
