@@ -71,6 +71,8 @@
         apt-get -y install docker-ce
 
     Now, verify installation by "docker version"
+    In Case of Errors :
+    	 /etc/init.d/docker start
 
 8.  Connecting Jenkins and sonarqube :
         start jenkins & sonarqube containers
