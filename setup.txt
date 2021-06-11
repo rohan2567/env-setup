@@ -52,10 +52,10 @@
     az login -u <username> -p <password>
 
 7. Install Docker inside a Jenkins container :
-    Create a vm
-    run jenkins container
-    docker exec -u root -it bash <container-jenkins-name>
-    run the following script :
+    Start Jenkins Container 
+    Go into the shell of jenkins :
+    	docker exec -it -u root --privileged=true <container-jenkins-name> /bin/bash
+    Now,run the following script to install docker inside it:
         apt-get update && \
         apt-get -y install apt-transport-https \
         ca-certificates \
