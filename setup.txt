@@ -5,6 +5,11 @@
     sudo usermod -aG docker $USER
     sudo chmod 666 /var/run/docker.sock
     docker --version
+    
+    Install CTOP command line for docker-monitoring :
+    	sudo wget https://github.com/bcicen/ctop/releases/download/v0.7.1/ctop-0.7.1-linux-amd64  -O /usr/local/bin/ctop
+	sudo chmod +x /usr/local/bin/ctop
+	docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest
 
 2. Terraform :
     sudo apt-get install unzip
